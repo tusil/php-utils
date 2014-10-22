@@ -8,6 +8,7 @@
   
   echo "START TRANSACTION;\n\n";
   
+  $files = array();
   
   // 1. table - table_xy
   
@@ -17,6 +18,10 @@
   {
     // do some stuff
     $item['id'] += 500; // id incrase +500
+    
+    // find links to images, pdf etc in text fields
+    _export_links(array($item['text'], $item['description']), $files);
+    
     _mysql_insert('table_xy', $item);
   }  
 
@@ -26,13 +31,15 @@
 
   // commit
   echo "COMMIT;\n\n\n\n";  
-  // links
-  //echo "#!/bin/sh\n";
+
+
+  // generate sh for file transfer
+  echo "#!/bin/sh\n";
   foreach($files as $file)
   {
     
-    //echo "curl http://old.iprpraha.cz{$file} --create-dirs -o .{$file}\n";
-    //echo "chown web13:client2 .{$file}\n";
+    echo "curl http://currentweb.com{$file} --create-dirs -o .{$file}\n";
+    //echo "chown user:group .{$file}\n";
     //echo "chmod 0666 .{$file}\n";
   }
   
