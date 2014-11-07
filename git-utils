@@ -1,0 +1,2 @@
+# export rozdilu branchi do zipu
+git archive --format=zip aukce `git diff master --name-only` > aukce.zip
